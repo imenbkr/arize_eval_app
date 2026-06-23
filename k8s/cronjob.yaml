@@ -1,0 +1,29 @@
+# Deployed equivalent of the local cron job: runs one batch every 5 minutes.
+# The Arize wiring in app.py is unchanged — credentials now come from the
+# Secret (envFrom) instead of a .env file.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: arize-eval
+spec:
+  schedule: "*/5 * * * *"        # every 5 minutes
+  concurrencyPolicy: Forbid      # don't overlap runs
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: arize-eval
+              image: arize-eval-app:latest
+              imagePullPolicy: IfNotPresent   # use the image built into Minikube
+              envFrom:
+                - secretRef:
+                    name: arize-eval-secrets
+              env:
+                - name: ARIZE_PROJECT
+                  value: "arize-eval-demo"
+                - name: LLM_MODEL
+                  value: "gpt-4o-mini"

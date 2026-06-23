@@ -1,0 +1,15 @@
+resources: https://arize.com/docs/ax/integrations/llm-providers/openrouter/openrouter-tracing
+https://arize.com/docs/ax/integrations/llm-providers/llama/ollama-tracing
+
+
+Project structure should be like this: 
+
+arize-eval-app/
+├── README.md
+├── requirements.txt
+├── app.py            # the LLM app (trace generator)
+├── run_once.py       # single run, called by cron
+└── .env.example      # documents the env vars (no real secrets)
+
+pip install openai openinference-instrumentation-openai arize-otel             opentelemetry-sdk opentelemetry-exporter-otlp
+pip install openinference-instrumentation-anthropic anthropic arize-otel

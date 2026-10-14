@@ -1,13 +1,12 @@
-# Deployed equivalent of the local cron job: runs one batch every 5 minutes.
-# The Arize wiring in app.py is unchanged — credentials now come from the
-# Secret (envFrom) instead of a .env file.
+# Nightly eval run: the golden set goes through every model and the judge,
+# and the traces (with eval labels) are exported to Arize AX.
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: arize-eval
+  name: rag-eval
 spec:
-  schedule: "*/5 * * * *"        # every 5 minutes
-  concurrencyPolicy: Forbid      # don't overlap runs
+  schedule: "0 2 * * *"          # every night at 02:00
+  concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
   jobTemplate:
@@ -16,14 +15,12 @@ spec:
         spec:
           restartPolicy: Never
           containers:
-            - name: arize-eval
-              image: arize-eval-app:latest
-              imagePullPolicy: IfNotPresent   # use the image built into Minikube
+            - name: rag-eval
+              image: rag-eval:latest
+              imagePullPolicy: IfNotPresent   # image built into Minikube
               envFrom:
                 - secretRef:
                     name: arize-eval-secrets
               env:
-                - name: ARIZE_PROJECT
-                  value: "arize-eval-demo"
-                - name: LLM_MODEL
-                  value: "gpt-4o-mini"
+                - name: TRACING_BACKEND
+                  value: "arize"

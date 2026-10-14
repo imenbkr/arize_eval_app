@@ -1,0 +1,30 @@
+{"question": "What are the main telemetry signals in OpenTelemetry?", "reference": "Traces, metrics and logs (with baggage and profiles as additional signals)."}
+{"question": "What is a span?", "reference": "A span represents a unit of work or operation; spans are the building blocks of traces."}
+{"question": "What does a trace show?", "reference": "The full path a request takes through an application, made of spans."}
+{"question": "Which span kinds exist in OpenTelemetry?", "reference": "Client, Server, Internal, Producer and Consumer."}
+{"question": "What span kind is assumed if none is provided?", "reference": "Internal."}
+{"question": "What is the parent of a consumer span?", "reference": "A producer span."}
+{"question": "What is a span event?", "reference": "A structured log message or annotation on a span, marking a meaningful point in time during the span."}
+{"question": "What are span links used for?", "reference": "To associate a span with one or more other spans, implying a causal relationship, for example across asynchronous operations."}
+{"question": "What values can span status have?", "reference": "Unset, Ok and Error."}
+{"question": "What is context propagation?", "reference": "The mechanism that moves context between services and processes so signals can be correlated across boundaries."}
+{"question": "What does the context contain when Service A calls Service B?", "reference": "A trace ID and a span ID, so Service B can create a child span in the same trace."}
+{"question": "Which header does the default propagator use to carry the trace context?", "reference": "The traceparent header from the W3C TraceContext specification."}
+{"question": "What is baggage in OpenTelemetry?", "reference": "A key-value store of contextual information propagated alongside context across services."}
+{"question": "Give examples of data that baggage is typically used for.", "reference": "Account identification, user IDs, product IDs or origin IPs available at the start of a request."}
+{"question": "What is a metric in OpenTelemetry?", "reference": "A measurement of a service captured at runtime, with the time it was captured and associated metadata."}
+{"question": "What is the difference between a Counter and an UpDownCounter?", "reference": "A Counter only accumulates (goes up); an UpDownCounter accumulates but can also go down."}
+{"question": "What does a Histogram instrument do?", "reference": "It is a client-side aggregation of values such as request latencies."}
+{"question": "What creates metric instruments?", "reference": "A Meter, which is created from a Meter Provider."}
+{"question": "What is a log in OpenTelemetry?", "reference": "A timestamped text record, structured or unstructured, with optional metadata."}
+{"question": "Are all logs events?", "reference": "No. Events are a special type of logs: all events are logs, but not all logs are events."}
+{"question": "What is sampling and why is it used?", "reference": "Choosing which traces to process and export; it reduces observability costs without losing visibility."}
+{"question": "What does it mean for a span to be sampled?", "reference": "It is processed and exported."}
+{"question": "What is head sampling?", "reference": "Making the sampling decision as early as possible, without looking at the whole trace."}
+{"question": "What is the default service.name if none is set?", "reference": "unknown_service."}
+{"question": "What is zero-code instrumentation?", "reference": "Adding OpenTelemetry capabilities to an application without code changes, typically as an agent or agent-like installation."}
+{"question": "What are semantic conventions?", "reference": "Common names for different kinds of operations and data, so telemetry is consistent across codebases and backends."}
+{"question": "Who won the 2018 FIFA World Cup?", "reference": "I don't know"}
+{"question": "What is the pricing of Datadog APM per host?", "reference": "I don't know"}
+{"question": "Which Python version introduced the walrus operator?", "reference": "I don't know"}
+{"question": "What is the capital of Australia?", "reference": "I don't know"}

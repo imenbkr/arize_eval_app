@@ -1,17 +1,18 @@
-# Minimal image for the Arize trace-generator app.
+# Image for the RAG app and its eval suite.
 FROM python:3.12-slim
 
 WORKDIR /app
+RUN apt-get update && apt-get install -y --no-install-recommends git make \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install deps first (better layer caching).
 COPY requirements.txt .
-RUN pip install --no-cache-dir --upgrade pip \
-    && pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the app code.
-COPY app.py run_once.py ./
+COPY Makefile ./
+COPY src/ src/
+COPY evals/ evals/
+RUN make docs PY=python
 
-# Default command runs one batch and exits. In Kubernetes this is run on a
-# schedule via a CronJob (see k8s/cronjob.yaml), which is the deployed
-# equivalent of the local cron job.
-CMD ["python", "run_once.py"]
+ENV PYTHONPATH=src
+# Default: one eval run, traced to the backend set by TRACING_BACKEND.
+CMD ["python", "evals/run_evals.py"]
